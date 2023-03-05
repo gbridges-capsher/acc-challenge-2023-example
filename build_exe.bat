@@ -1,0 +1,1 @@
+pyinstaller main.pyw --name "My Game" --onefile
