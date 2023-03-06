@@ -20,11 +20,18 @@ class Paddle:
         elif self.center_y > SCREEN_HEIGHT - self.height / 2:
             self.center_y = SCREEN_HEIGHT - self.height / 2
 
-    def draw(self, screen):
-        rect = pg.Rect(
+    def get_rect(self): # alternatively, "get_rekt"
+        return pg.Rect(
             self.center_x - self.width / 2,
             self.center_y - self.height / 2,
             self.width,
             self.height
         )
-        pg.draw.rect(screen, self.color, rect)
+
+    def draw(self, screen):
+        pg.draw.rect(screen, self.color, self.get_rect())
+
+    def test_hit_ball(ball):
+        # draw rect from ball's old position to new position, then test for intersection with our paddle
+        # ball center to ball center is sufficient
+        pass

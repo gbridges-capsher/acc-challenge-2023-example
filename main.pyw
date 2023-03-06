@@ -31,18 +31,21 @@ def main():
                 pg.quit()
                 raise SystemExit
 
-        # handle movements
+        # adjust movements
         player_paddle.set_y(pg.mouse.get_pos()[1])
         ball.update()
 
+        # detect hit collisions and handle
+        # TODO
+
+        # draw everything
         # show blue screen with updating datetime in center 
         screen.fill(light_blue)
 
-        # draw components
         player_paddle.draw(screen)
         ball.draw(screen)
 
-        # refresh
+        # refresh screen
         pg.display.flip()
         clock.tick(FPS)
 

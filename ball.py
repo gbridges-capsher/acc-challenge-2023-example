@@ -28,20 +28,39 @@ class Ball:
 
         # adjust y position to not go past screen bounds (bounce)
         if self.y_vel < 0 and new_y < self.size / 2:
-            new_y += (self.size / 2) - new_y
+            new_y = (self.size / 2) - new_y
             self.y_vel *= -1
-        elif self.y_vel > 0 and new_y > (SCREEN_HEIGHT - self.size):
-            new_y -= (SCREEN_HEIGHT - self.size) - (new_y + self.size)
+        elif self.y_vel > 0 and new_y > (SCREEN_HEIGHT - self.size / 2):
+            new_y = SCREEN_HEIGHT - ((new_y + self.size/2 - SCREEN_HEIGHT))
             self.y_vel *= -1
 
         self.center_x = new_x
         self.center_y = new_y
 
-    def draw(self, screen):
-        rect = pg.Rect(
+    def get_rect(self): # alternatively, "get_rekt"
+        return pg.Rect(
             self.center_x - self.size / 2,
             self.center_y - self.size / 2,
             self.size,
             self.size
         )
-        pg.draw.rect(screen, self.color, rect)
+    
+    def get_motion_rect(self):
+        # rectangle that encompasses motion from previous point to here
+        # start at current center, then 
+
+        x_sign_mult = 1 if self.x_vel > 0 else -1
+        y_sign_mult = 1 if self.y_vel > 0 else -1
+
+        return pg.Rect(
+            self.center_x - self.x_vel - x_sign_mult * self.size / 2,
+            self.center_y - self.y_vel - y_sign_mult * self.size / 2,
+            abs(self.x_vel) + self.size,
+            abs(self.y_vel) + self.size
+        )
+
+    def draw(self, screen):
+        pg.draw.rect(screen, (255,255,255), self.get_motion_rect())
+        pg.draw.rect(screen, self.color, self.get_rect())
+
+    
