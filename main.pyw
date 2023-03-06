@@ -3,6 +3,8 @@ import pygame as pg
 from datetime import datetime
 from constants import *
 from colors import *
+from paddle import Paddle
+from ball import Ball
 
 # game entrypoint
 def main():
@@ -16,6 +18,11 @@ def main():
     # create text object
     font = pg.font.Font('freesansbold.ttf', 32)
 
+    # set up paddles
+    player_paddle = Paddle(40, SCREEN_HEIGHT / 2)
+
+    ball = Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
     # main game loop
     while True:
         # handle events
@@ -24,16 +31,19 @@ def main():
                 pg.quit()
                 raise SystemExit
 
+        # handle movements
+        player_paddle.set_y(pg.mouse.get_pos()[1])
+        ball.update()
+
         # show blue screen with updating datetime in center 
         screen.fill(light_blue)
 
-        text = font.render(datetime.now().strftime("%m/%d/%Y %H:%M:%S"), True, dark_blue, None)
-        textRect = text.get_rect()
-        textRect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-        
-        screen.blit(text, textRect)
+        # draw components
+        player_paddle.draw(screen)
+        ball.draw(screen)
 
-        pg.display.flip() # refresh
+        # refresh
+        pg.display.flip()
         clock.tick(FPS)
 
 if __name__ == "__main__":
