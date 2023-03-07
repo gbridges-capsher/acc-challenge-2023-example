@@ -1,66 +1,59 @@
 from colors import *
 from constants import *
+from random import randint
 import pygame as pg
 
 class Ball:
-    def __init__(self, center_x, center_y):
-        self.center_x = center_x
-        self.center_y = center_y
-
-        self.x_vel = 10
-        self.y_vel = 10
+    def __init__(self):
+        self.center_x = 0
+        self.center_y = 0
+        self.x_vel = 0
+        self.y_vel = 0
 
         self.color = dark_blue
+        self.radius = 4
 
-        # width and height
-        self.size = 4
+        self.reset(False)
 
     def update(self):
-        new_x = self.center_x + self.x_vel
-        new_y = self.center_y + self.y_vel
+        self.center_x += self.x_vel
+        self.center_y += self.y_vel
 
-        if new_x < 0:
-            new_x = 0
+        # bounds check
+        if self.x_vel < 0 and self.center_x <= 0 or self.x_vel > 0 and self.center_x >= SCREEN_WIDTH:
             self.x_vel *= -1
-        elif new_x > SCREEN_WIDTH:
-            new_x = SCREEN_WIDTH
-            self.x_vel *= -1
-
-        # adjust y position to not go past screen bounds (bounce)
-        if self.y_vel < 0 and new_y < self.size / 2:
-            new_y = (self.size / 2) - new_y
+        if self.y_vel < 0 and self.center_y <= 0 or self.y_vel > 0 and self.center_y >= SCREEN_HEIGHT:
             self.y_vel *= -1
-        elif self.y_vel > 0 and new_y > (SCREEN_HEIGHT - self.size / 2):
-            new_y = SCREEN_HEIGHT - ((new_y + self.size/2 - SCREEN_HEIGHT))
-            self.y_vel *= -1
-
-        self.center_x = new_x
-        self.center_y = new_y
-
-    def get_rect(self): # alternatively, "get_rekt"
-        return pg.Rect(
-            self.center_x - self.size / 2,
-            self.center_y - self.size / 2,
-            self.size,
-            self.size
-        )
-    
-    def get_motion_rect(self):
-        # rectangle that encompasses motion from previous point to here
-        # start at current center, then 
-
-        x_sign_mult = 1 if self.x_vel > 0 else -1
-        y_sign_mult = 1 if self.y_vel > 0 else -1
-
-        return pg.Rect(
-            self.center_x - self.x_vel - x_sign_mult * self.size / 2,
-            self.center_y - self.y_vel - y_sign_mult * self.size / 2,
-            abs(self.x_vel) + self.size,
-            abs(self.y_vel) + self.size
-        )
 
     def draw(self, screen):
-        pg.draw.rect(screen, (255,255,255), self.get_motion_rect())
-        pg.draw.rect(screen, self.color, self.get_rect())
+        pg.draw.circle(screen, self.color, (self.center_x, self.center_y), self.radius)
 
+    def reset(self, move_left):
+        self.center_x = SCREEN_WIDTH / 2
+        self.center_y = SCREEN_HEIGHT / 2
+
+        self.x_vel = 20 * (1 if move_left else -1)
+        self.y_vel = randint(-15, 15)
+
+    def apply_speed_limit(self):
+        max_speed = 50
+        self.x_vel = min(max(self.x_vel, -max_speed), max_speed)
+
+    def prev_x(self):
+        return self.center_x - self.x_vel
     
+    def prev_y(self):
+        return self.center_y - self.y_vel
+
+    def get_interpolated_y(self, x):
+        # get y value at some x between our last point and current point
+        x1 = self.center_x
+        x2 = self.prev_x()
+        y1 = self.center_y
+        y2 = self.prev_y()
+
+        # oh boy algebra!
+        m = (y2 - y1)/(x2 - x1)
+        b = y1 - m * x1
+
+        return m*x + b
