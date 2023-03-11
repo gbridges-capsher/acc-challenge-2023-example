@@ -1,6 +1,7 @@
 import pygame as pg
 from constants import *
 from paddle import Paddle
+from ai_paddle import AIPaddle
 from ball import Ball
 from colors import *
 
@@ -19,7 +20,7 @@ class GameMgr:
         # gameplay elements
         self.ball = Ball()
         self.player_paddle = Paddle(PADDLE_DIST_FROM_EDGE)
-        self.ai_paddle = None
+        self.ai_paddle = AIPaddle(SCREEN_WIDTH - PADDLE_DIST_FROM_EDGE)
 
     def run(self):
         # main game loop
@@ -40,17 +41,21 @@ class GameMgr:
     def update(self):
         # adjust movements
         self.player_paddle.update(pg.mouse.get_pos()[1])
+        self.ai_paddle.update(pg.mouse.get_pos()[1])
         self.ball.update()
 
         # detect hit collisions and handle
         if self.player_paddle.ball_collision_test(self.ball):
             self.ball.handle_paddle_hit(self.player_paddle)
+        elif self.ai_paddle.ball_collision_test(self.ball):
+            self.ball.handle_paddle_hit(self.ai_paddle)
 
     def draw(self):
         # show blue screen with updating datetime in center 
         self.screen.fill(light_blue)
 
         self.player_paddle.draw(self.screen)
+        self.ai_paddle.draw(self.screen)
         self.ball.draw(self.screen)
 
         # text display
