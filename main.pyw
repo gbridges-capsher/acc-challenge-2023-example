@@ -21,7 +21,7 @@ def main():
     # set up paddles
     player_paddle = Paddle(40, SCREEN_HEIGHT / 2)
 
-    ball = Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    ball = Ball()
 
     # main game loop
     while True:
@@ -32,11 +32,12 @@ def main():
                 raise SystemExit
 
         # adjust movements
-        player_paddle.set_y(pg.mouse.get_pos()[1])
+        player_paddle.update(pg.mouse.get_pos()[1])
         ball.update()
 
         # detect hit collisions and handle
-        # TODO
+        if player_paddle.ball_collision_test(ball):
+            ball.handle_paddle_hit(player_paddle)
 
         # draw everything
         # show blue screen with updating datetime in center 

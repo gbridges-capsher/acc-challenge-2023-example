@@ -7,11 +7,11 @@ class Paddle:
         self.center_x = center_x
         self.center_y = center_y
 
-        self.height = 40
-        self.width = 4
+        self.height = PADDLE_INITIAL_HEIGHT
+        self.width = PADDLE_WIDTH
         self.color = dark_blue
 
-    def set_y(self, y):
+    def update(self, y):
         self.center_y = y
 
         # adjust position to not go past screen bounds
@@ -20,6 +20,25 @@ class Paddle:
         elif self.center_y > SCREEN_HEIGHT - self.height / 2:
             self.center_y = SCREEN_HEIGHT - self.height / 2
 
+    def ball_collision_test(self, ball):
+        if ball.x_vel < 0 and ball.prev_x() > self.center_x and ball.center_x <= self.center_x:
+            # passed over our x position - see if it collided with paddle in y direction
+            ball_y = ball.get_interpolated_y(self.center_x)
+            if ball_y >= self.top_y() - ball.radius and ball_y <= self.bottom_y() + ball.radius:
+                # smack!
+                return True
+            
+        return False
+    
+    def top_y(self):
+        return self.center_y - self.height / 2
+    
+    def bottom_y(self):
+        return self.center_y + self.height / 2
+
+    def draw(self, screen):
+        pg.draw.rect(screen, self.color, self.get_rect())
+
     def get_rect(self): # alternatively, "get_rekt"
         return pg.Rect(
             self.center_x - self.width / 2,
@@ -27,11 +46,3 @@ class Paddle:
             self.width,
             self.height
         )
-
-    def draw(self, screen):
-        pg.draw.rect(screen, self.color, self.get_rect())
-
-    def test_hit_ball(ball):
-        # draw rect from ball's old position to new position, then test for intersection with our paddle
-        # ball center to ball center is sufficient
-        pass
