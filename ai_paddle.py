@@ -1,48 +1,21 @@
+from typing_extensions import override
 from constants import *
-from colors import *
-import pygame as pg
+from paddle import Paddle
 
-class AIPaddle:
-    def __init__(self, center_x):
-        self.center_x = center_x
-        self.center_y = SCREEN_HEIGHT / 2
+"""
+AI-controlled opponent paddle - calculates its own position based on ball position
+"""
+class AIPaddle(Paddle):
+    def __init__(self):
+        super().__init__()
 
-        self.height = PADDLE_INITIAL_HEIGHT
-        self.width = PADDLE_WIDTH
-        self.color = dark_blue
+        self.center_x = SCREEN_WIDTH - PADDLE_DIST_FROM_EDGE
 
-    def update(self, y):
-        self.center_y = y
+    @override
+    def check_ball_passed(self, ball):
+        return ball.x_vel > 0 and ball.prev_x() <= self.center_x and ball.center_x > self.center_x
 
-        # adjust position to not go past screen bounds
-        if self.center_y < self.height / 2:
-            self.center_y = self.height / 2
-        elif self.center_y > SCREEN_HEIGHT - self.height / 2:
-            self.center_y = SCREEN_HEIGHT - self.height / 2
+    def update(self, ball):
+        self.center_y = ball.center_y
 
-    def ball_collision_test(self, ball):
-        if ball.x_vel > 0 and ball.prev_x() <= self.center_x and ball.center_x > self.center_x:
-            # passed over our x position - see if it collided with paddle in y direction
-            ball_y = ball.get_interpolated_y(self.center_x)
-            if ball_y >= self.top_y() - ball.radius and ball_y <= self.bottom_y() + ball.radius:
-                # smack!
-                return True
-            
-        return False
-    
-    def top_y(self):
-        return self.center_y - self.height / 2
-    
-    def bottom_y(self):
-        return self.center_y + self.height / 2
-
-    def draw(self, screen):
-        pg.draw.rect(screen, self.color, self.get_rect())
-
-    def get_rect(self): # alternatively, "get_rekt"
-        return pg.Rect(
-            self.center_x - self.width / 2,
-            self.center_y - self.height / 2,
-            self.width,
-            self.height
-        )
+        self.bound_y_position()

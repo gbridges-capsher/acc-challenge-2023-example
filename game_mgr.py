@@ -1,6 +1,6 @@
 import pygame as pg
 from constants import *
-from paddle import Paddle
+from player_paddle import PlayerPaddle
 from ai_paddle import AIPaddle
 from ball import Ball
 from colors import *
@@ -19,8 +19,8 @@ class GameMgr:
 
         # gameplay elements
         self.ball = Ball()
-        self.player_paddle = Paddle(PADDLE_DIST_FROM_EDGE)
-        self.ai_paddle = AIPaddle(SCREEN_WIDTH - PADDLE_DIST_FROM_EDGE)
+        self.player_paddle = PlayerPaddle()
+        self.ai_paddle = AIPaddle()
 
         self.player_score = 0
         self.ai_score = 0
@@ -43,9 +43,9 @@ class GameMgr:
 
     def update(self):
         # adjust movements
-        self.player_paddle.update(pg.mouse.get_pos()[1])
-        self.ai_paddle.update(pg.mouse.get_pos()[1])
         self.ball.update()
+        self.player_paddle.update(pg.mouse.get_pos()[1])
+        self.ai_paddle.update(self.ball)
 
         # detect hit collisions and handle
         if self.player_paddle.ball_collision_test(self.ball):
