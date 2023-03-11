@@ -1,4 +1,6 @@
-# This constants file serves as a kind of "dashboard" to easily adjust game mechanics in one spot
+"""
+This constants file serves as a kind of "dashboard" to easily adjust game mechanics in one spot
+"""
 
 # game constants
 FPS = 24
@@ -17,3 +19,4 @@ BALL_Y_VEL_RANGE = 30
 # paddle constants
 PADDLE_INITIAL_HEIGHT = 60
 PADDLE_WIDTH = 4
+PADDLE_DIST_FROM_EDGE = 40

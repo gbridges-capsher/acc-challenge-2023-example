@@ -32,7 +32,7 @@ class Ball:
         self.center_x = SCREEN_WIDTH / 2
         self.center_y = SCREEN_HEIGHT / 2
 
-        self.x_vel = BALL_INITIAL_X_VEL * (1 if move_left else -1)
+        self.x_vel = BALL_INITIAL_X_VEL * (-1 if move_left else 1)
         self.y_vel = randint(-1 * BALL_Y_VEL_RANGE / 2, BALL_Y_VEL_RANGE / 2)
 
     def apply_speed_limit(self):

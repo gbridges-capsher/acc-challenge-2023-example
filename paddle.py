@@ -3,9 +3,9 @@ from colors import *
 import pygame as pg
 
 class Paddle:
-    def __init__(self, center_x, center_y):
+    def __init__(self, center_x):
         self.center_x = center_x
-        self.center_y = center_y
+        self.center_y = SCREEN_HEIGHT / 2
 
         self.height = PADDLE_INITIAL_HEIGHT
         self.width = PADDLE_WIDTH
