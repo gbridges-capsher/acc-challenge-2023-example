@@ -15,9 +15,6 @@ def main():
     pg.display.set_caption(GAME_TITLE)
     clock = pg.time.Clock()
 
-    # create text object
-    font = pg.font.Font('freesansbold.ttf', 32)
-
     # set up paddles
     player_paddle = Paddle(40, SCREEN_HEIGHT / 2)
 
@@ -45,6 +42,14 @@ def main():
 
         player_paddle.draw(screen)
         ball.draw(screen)
+
+        # text display
+        if SHOW_DEBUG_METRICS:
+            font = pg.font.Font('freesansbold.ttf', 12)
+            text = font.render(f'Ball Vel: [{ball.x_vel:0.1f}, {ball.y_vel:0.1f}]', True, dark_blue)
+            text_rect = text.get_rect()
+            text_rect.topleft = (20, 20)
+            screen.blit(text, text_rect)
 
         # refresh screen
         pg.display.flip()

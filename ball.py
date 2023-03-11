@@ -33,11 +33,10 @@ class Ball:
         self.center_y = SCREEN_HEIGHT / 2
 
         self.x_vel = BALL_INITIAL_X_VEL * (1 if move_left else -1)
-        self.y_vel = randint(-1 * BALL_INITIAL_Y_VEL_RANGE / 2, BALL_INITIAL_Y_VEL_RANGE / 2)
+        self.y_vel = randint(-1 * BALL_Y_VEL_RANGE / 2, BALL_Y_VEL_RANGE / 2)
 
     def apply_speed_limit(self):
-        max_speed = BALL_MAX_VEL
-        self.x_vel = min(max(self.x_vel, -max_speed), max_speed)
+        self.x_vel = min(max(self.x_vel, -BALL_MAX_X_VEL), BALL_MAX_X_VEL)
 
     def prev_x(self):
         return self.center_x - self.x_vel
@@ -65,4 +64,4 @@ class Ball:
         self.center_x += self.x_vel # update x to corrected position after boucnce
 
         # recompute y velocity based on where the ball hit the paddle
-        self.y_vel = 30 * (paddle.center_y - self.center_y)/(paddle.top_y() - paddle.bottom_y()) 
+        self.y_vel = BALL_Y_VEL_RANGE * (paddle.center_y - self.center_y)/(paddle.top_y() - paddle.bottom_y()) 
