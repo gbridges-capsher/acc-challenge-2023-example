@@ -22,6 +22,9 @@ class GameMgr:
         self.player_paddle = Paddle(PADDLE_DIST_FROM_EDGE)
         self.ai_paddle = AIPaddle(SCREEN_WIDTH - PADDLE_DIST_FROM_EDGE)
 
+        self.player_score = 0
+        self.ai_score = 0
+
     def run(self):
         # main game loop
         while True:
@@ -50,20 +53,47 @@ class GameMgr:
         elif self.ai_paddle.ball_collision_test(self.ball):
             self.ball.handle_paddle_hit(self.ai_paddle)
 
+        # detect passing bounds and handle
+        if self.ball.x_vel < 0 and self.ball.center_x < 0:
+            self.handle_ai_score()
+        elif self.ball.x_vel > 0 and self.ball.center_x > SCREEN_WIDTH:
+            self.handle_player_score()
+
     def draw(self):
-        # show blue screen with updating datetime in center 
+        # background
         self.screen.fill(light_blue)
 
+        # center line
+        pg.draw.line(self.screen, dark_blue, (SCREEN_WIDTH / 2, 0), (SCREEN_WIDTH / 2, SCREEN_HEIGHT), 2)
+
+        # gameplay elements
         self.player_paddle.draw(self.screen)
         self.ai_paddle.draw(self.screen)
         self.ball.draw(self.screen)
 
-        # text display
+        # score text display
+        self.draw_text(f'{self.player_score}', 20, 20, dark_blue, 12)
+        self.draw_text(f'{self.ai_score}', SCREEN_WIDTH - 20, 20, dark_blue, 12)
+
         if SHOW_DEBUG_METRICS:
-            font = pg.font.Font('freesansbold.ttf', 12)
-            text = font.render(f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', True, dark_blue)
-            text_rect = text.get_rect()
-            text_rect.topleft = (20, 20)
-            self.screen.blit(text, text_rect)
+            self.draw_text(f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', 20, SCREEN_HEIGHT - 20, dark_blue, 12)
 
         pg.display.flip()
+
+    def handle_ai_score(self):
+        self.ball.reset(False)
+        self.ai_score += 1
+
+    def handle_player_score(self):
+        self.ball.reset(True)
+        self.player_score += 1
+
+    """
+    Utility for easily drawing text on screen
+    """
+    def draw_text(self, text, x, y, color, font_size):
+        font = pg.font.Font('freesansbold.ttf', font_size)
+        text_object = font.render(text, True, color)
+        text_rect = text_object.get_rect()
+        text_rect.topleft = (x, y)
+        self.screen.blit(text_object, text_rect)

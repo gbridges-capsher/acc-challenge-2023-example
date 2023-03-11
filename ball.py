@@ -20,8 +20,6 @@ class Ball:
         self.center_y += self.y_vel
 
         # bounds check
-        if self.x_vel < 0 and self.center_x <= 0 or self.x_vel > 0 and self.center_x >= SCREEN_WIDTH:
-            self.x_vel *= -1
         if self.y_vel < 0 and self.center_y <= 0 or self.y_vel > 0 and self.center_y >= SCREEN_HEIGHT:
             self.y_vel *= -1
 
