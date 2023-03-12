@@ -9,7 +9,7 @@ class BaseGameStateMgr(ABC):
         self.screen = screen
 
     def shutdown(self):
-        pass
+        raise NotImplementedError("Implement in derived classes")
 
     def handle_events(self):
         handled = False
@@ -35,5 +35,5 @@ class BaseGameStateMgr(ABC):
         font = pg.font.Font('freesansbold.ttf', font_size)
         text_object = font.render(text, True, color)
         text_rect = text_object.get_rect()
-        text_rect.topleft = (x, y)
+        text_rect.center = (x, y)
         self.screen.blit(text_object, text_rect)

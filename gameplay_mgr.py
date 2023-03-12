@@ -23,6 +23,10 @@ class GameplayMgr(BaseGameStateMgr):
         self.ai_score = 0
 
     @override
+    def shutdown(self):
+        pass
+
+    @override
     def handle_events(self):
         return super().handle_events()
 
@@ -63,7 +67,7 @@ class GameplayMgr(BaseGameStateMgr):
         self.draw_text(f'{self.ai_score}', SCREEN_WIDTH - 20, 20, dark_blue, 12)
 
         if SHOW_DEBUG_METRICS:
-            self.draw_text(f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', 20, SCREEN_HEIGHT - 20, dark_blue, 12)
+            self.draw_text(f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', 80, SCREEN_HEIGHT - 20, dark_blue, 12)
 
         pg.display.flip()
 

@@ -5,6 +5,7 @@ from ai_paddle import AIPaddle
 from ball import Ball
 from colors import *
 from gameplay_mgr import GameplayMgr
+from start_screen_mgr import StartScreenMgr
 from game_state import GameState
 
 """
@@ -31,21 +32,20 @@ class GameMgr:
         self.ai_score = 0
 
     def run(self):
-        self.activate_game_state(GameState.GAMEPLAY)
+        self.activate_game_state(GameState.START_SCREEN)
 
         # main game loop
         while True:
-            mgr = self.active_game_state_mgr
-            mgr.handle_events()
-            mgr.update()
-            mgr.draw()
+            self.active_game_state_mgr.handle_events()
+            self.active_game_state_mgr.update()
+            self.active_game_state_mgr.draw()
 
             # sleep
             self.clock.tick(FPS)
     
     def activate_game_state(self, state):
         if self.game_state != state:
-            print(f'Transitioning from game state {self.game_state} to {state}')
+            print(f'Transitioning from game state {self.game_state} to {state.value}')
             self.game_state = state
 
             if self.active_game_state_mgr is not None:
@@ -53,10 +53,10 @@ class GameMgr:
                self.active_game_state_mgr = None 
 
             if self.game_state == GameState.START_SCREEN:
-                pass
+                self.active_game_state_mgr = StartScreenMgr(self.screen)
             elif self.game_state == GameState.GAMEPLAY:
                 self.active_game_state_mgr = GameplayMgr(self.screen)
             elif self.game_state == GameState.END_SCREEN:
                 pass
             else:
-                raise NotImplementedError(f'Unhandled game state transition: {state}')
+                raise NotImplementedError(f'Unhandled game state transition: {state.value}')
