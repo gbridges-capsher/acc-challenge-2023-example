@@ -48,9 +48,9 @@ class GameMgr:
         self.ai_paddle.update(self.ball)
 
         # detect hit collisions and handle
-        if self.player_paddle.ball_collision_test(self.ball):
+        if self.ball.x_vel < 0 and self.player_paddle.ball_collision_test(self.ball):
             self.ball.handle_paddle_hit(self.player_paddle)
-        elif self.ai_paddle.ball_collision_test(self.ball):
+        elif self.ball.x_vel > 0 and self.ai_paddle.ball_collision_test(self.ball):
             self.ball.handle_paddle_hit(self.ai_paddle)
 
         # detect passing bounds and handle

@@ -25,8 +25,8 @@ class AIPaddle(Paddle):
 
             target_spot_y = self.top_y() + self.target_spot_ratio * self.height
 
-            ball_is_below_paddle = ball.center_y > target_spot_y - 2 * ball.radius
-            ball_is_above_paddle = ball.center_y < target_spot_y + 2 * ball.radius
+            ball_is_below_paddle = ball.center_y > target_spot_y - self.height / 5
+            ball_is_above_paddle = ball.center_y < target_spot_y + self.height / 5
 
             if ball_is_below_paddle or ball_is_above_paddle:
                 # ease towards the ball
