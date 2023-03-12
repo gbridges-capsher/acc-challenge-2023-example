@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from constants import *
 from colors import *
 import pygame as pg
@@ -5,7 +6,7 @@ import pygame as pg
 """
 Base paddle class for player and AI paddles to derive from
 """
-class Paddle:
+class Paddle(ABC):
     def __init__(self):
         self.center_x = 0
         self.center_y = SCREEN_HEIGHT / 2
@@ -14,6 +15,7 @@ class Paddle:
         self.width = PADDLE_WIDTH
         self.color = dark_blue
 
+    @abstractmethod
     def check_ball_passed(self, ball):
         raise NotImplementedError("Override in derived classes")
 
