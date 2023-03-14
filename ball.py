@@ -2,6 +2,7 @@ from colors import *
 from constants import *
 from random import randint
 import pygame as pg
+from pygame import gfxdraw
 
 class Ball:
     def __init__(self):
@@ -24,7 +25,9 @@ class Ball:
             self.y_vel *= -1
 
     def draw(self, screen):
-        pg.draw.circle(screen, self.color, (self.center_x, self.center_y), self.radius)
+        #pg.draw.circle(screen, self.color, (self.center_x, self.center_y), self.radius)
+        gfxdraw.aacircle(screen, int(self.center_x), int(self.center_y), self.radius, self.color)
+        gfxdraw.filled_circle(screen, int(self.center_x), int(self.center_y), self.radius, self.color)
 
     def reset(self, move_left):
         self.center_x = SCREEN_WIDTH / 2

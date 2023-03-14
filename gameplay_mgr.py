@@ -27,8 +27,9 @@ class GameplayMgr(BaseGameStateMgr):
         pass
 
     @override
-    def handle_events(self):
-        return super().handle_events()
+    def process_frame(self):
+        self.update()
+        self.draw()
 
     @override
     def update(self):
@@ -37,17 +38,19 @@ class GameplayMgr(BaseGameStateMgr):
         self.player_paddle.update(pg.mouse.get_pos()[1])
         self.ai_paddle.update(self.ball)
 
-        # detect hit collisions and handle
+        # detect hit ball collisions and handle
         if self.ball.x_vel < 0 and self.player_paddle.ball_collision_test(self.ball):
             self.ball.handle_paddle_hit(self.player_paddle)
         elif self.ball.x_vel > 0 and self.ai_paddle.ball_collision_test(self.ball):
             self.ball.handle_paddle_hit(self.ai_paddle)
 
-        # detect passing bounds and handle
+        # detect ball passing paddle and handle
         if self.ball.x_vel < 0 and self.ball.center_x < 0:
             self.handle_ai_score()
         elif self.ball.x_vel > 0 and self.ball.center_x > SCREEN_WIDTH:
             self.handle_player_score()
+
+        # TODO handle score hitting limit
 
     @override
     def draw(self):
