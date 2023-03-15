@@ -73,8 +73,9 @@ class GameplayMgr(BaseGameStateMgr):
         self.ball.draw(self.screen)
 
         # score text display
-        self.draw_text(f'{self.player_score}', 20, 20, Theme.PRIMARY.value, 12)
-        self.draw_text(f'{self.ai_score}', SCREEN_WIDTH - 20, 20, Theme.PRIMARY.value, 12)
+        score_text_margin = 20
+        self.draw_text(f'{self.player_score}', score_text_margin, score_text_margin, Theme.SECONDARY.value, 24)
+        self.draw_text(f'{self.ai_score}', SCREEN_WIDTH - score_text_margin, score_text_margin, Theme.SECONDARY.value, 24)
 
         if SHOW_DEBUG_METRICS:
             self.draw_text(f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', 80, SCREEN_HEIGHT - 20, Theme.PRIMARY.value, 12)

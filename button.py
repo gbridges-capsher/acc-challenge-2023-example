@@ -1,19 +1,22 @@
 import pygame as pg
-from theme import Theme
+from theme import Theme, Font
 from constants import *
 
 class Button:
-    def __init__(self, text, x, y, width, height, callback):
+    def __init__(self, text, callback):
         self.text = text
-        self.rect = pg.Rect(x, y, width, height)
         self.callback = callback
 
         self.font_size = 12
-        self.font_family = 'freesansbold.ttf'
+        self.font_family = Font.PRIMARY.value
+        self.rect = None # defined on "draw"; saved so we can do hit tests
 
         self.is_pressed = False
 
     def hit_test(self, x, y):
+        if self.rect is None:
+            return False
+
         return self.rect.collidepoint(x, y)
 
     def handle_mouse_left_btn_down(self, event):
@@ -35,7 +38,7 @@ class Button:
 
         return handled
     
-    def draw(self, screen):
+    def draw(self, screen, x, y, width, height):
         mouse_x = pg.mouse.get_pos()[0]
         mouse_y = pg.mouse.get_pos()[1]
         
@@ -46,6 +49,7 @@ class Button:
             else:
                 color = Theme.BUTTON_HOVER.value
         
+        self.rect = pg.Rect(x, y, width, height)
         pg.draw.rect(screen, color, self.rect)
 
         font = pg.font.Font(self.font_family, self.font_size)

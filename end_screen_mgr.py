@@ -13,16 +13,7 @@ class EndScreenMgr(BaseGameStateMgr):
         self.final_player_score = final_player_score
         self.final_ai_score = final_ai_score
 
-        btn_width = 80
-        btn_height = 20
-        self.btn_exit = Button(
-            'main menu', 
-            SCREEN_WIDTH / 2 - btn_width / 2, 
-            SCREEN_HEIGHT / 2 + 80 - btn_height / 2, 
-            btn_width, 
-            btn_height,
-            self.on_exit_btn_clicked
-        )
+        self.btn_exit = Button('main menu', self.on_exit_btn_clicked)
 
     @override
     def shutdown(self):
@@ -60,13 +51,22 @@ class EndScreenMgr(BaseGameStateMgr):
         # background
         self.screen.fill(Theme.BACKGROUND.value)
 
+        x_pos = SCREEN_WIDTH / 2
+        y_pos = SCREEN_HEIGHT / 2 - 75
+
         end_text = 'you win!' if self.final_player_score > self.final_ai_score else 'you lost'
-        self.draw_text(end_text, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 75, Theme.PRIMARY.value, 64)
+        self.draw_text(end_text, x_pos, y_pos, Theme.PRIMARY.value, 64)
 
-        self.draw_text('final score', SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 10, Theme.PRIMARY.value, 24)
-        self.draw_text(f'{self.final_player_score} - {self.final_ai_score}', SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 20, Theme.PRIMARY.value, 24)
+        y_pos += 65
+        self.draw_text('final score', x_pos, y_pos, Theme.PRIMARY.value, 24)
+        y_pos += 30
+        self.draw_text(f'{self.final_player_score} - {self.final_ai_score}', x_pos, y_pos, Theme.PRIMARY.value, 24)
 
-        self.btn_exit.draw(self.screen)
+        btn_width = 80
+        btn_height = 20
+        btn_x = x_pos - btn_width / 2
+        btn_y = y_pos + 60
+        self.btn_exit.draw(self.screen, btn_x, btn_y, btn_width, btn_height)
 
         pg.display.flip()
 

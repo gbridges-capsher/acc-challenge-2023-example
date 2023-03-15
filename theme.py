@@ -9,3 +9,6 @@ class Theme(Enum):
     BUTTON_HOVER = (171, 171, 171)
     BUTTON_CLICK = (140, 140, 140)
     BUTTON_TEXT = PRIMARY
+
+class Font(Enum):
+    PRIMARY = 'freesansbold.ttf'
