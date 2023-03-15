@@ -39,7 +39,9 @@ class Button:
 
         return handled
     
-    def draw(self, screen, mouse_x, mouse_y):
+    def draw(self, screen):
+        mouse_x = pg.mouse.get_pos()[0]
+        mouse_y = pg.mouse.get_pos()[1]
         
         color = self.base_color
         if self.hit_test(mouse_x, mouse_y):

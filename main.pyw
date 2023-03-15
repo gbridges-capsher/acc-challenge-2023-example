@@ -3,6 +3,7 @@ from constants import *
 from colors import *
 from start_screen_mgr import StartScreenMgr
 from gameplay_mgr import GameplayMgr
+from end_screen_mgr import EndScreenMgr
 from game_state import GameState
 from game_event import GameEvent
 
@@ -19,7 +20,11 @@ class Main:
         self.active_game_state_mgr = None
 
     def run(self):
-        self.activate_game_state(GameState.START_SCREEN)
+        self.transition_game_state(GameState.START_SCREEN)
+        #self.transition_game_state(GameState.GAME_OVER, pg.event.Event(GameEvent.ON_GAME_OVER.value, {
+        #    'player_score': 1, 
+        #    'ai_score': 0
+        #}))
 
         # main game loop
         while True:
@@ -29,16 +34,20 @@ class Main:
                     case pg.QUIT:
                         pg.quit()
                         raise SystemExit
-                    # --- user input events ---
+                    # --- input events ---
                     case pg.MOUSEBUTTONDOWN:
                         if event.button == 1:
                             self.active_game_state_mgr.handle_mouse_left_btn_down(event)
                     case pg.MOUSEBUTTONUP:
                         if event.button == 1:
                             self.active_game_state_mgr.handle_mouse_left_btn_up(event)
-                    # --- game events ---
+                    # --- game transition events ---
                     case GameEvent.ON_START_GAME.value:
-                        self.activate_game_state(GameState.GAMEPLAY)
+                        self.transition_game_state(GameState.GAMEPLAY)
+                    case GameEvent.ON_GAME_OVER.value:
+                        self.transition_game_state(GameState.GAME_OVER, event)
+                    case GameEvent.ON_RETURN_TO_START.value:
+                        self.transition_game_state(GameState.START_SCREEN)
 
             # tell active game state mgr to do work for this frame
             self.active_game_state_mgr.process_frame()
@@ -46,10 +55,10 @@ class Main:
             # sleep
             self.clock.tick(FPS)
     
-    def activate_game_state(self, state):
-        if self.game_state != state:
-            print(f'Transitioning from game state {self.game_state} to {state.value}')
-            self.game_state = state
+    def transition_game_state(self, new_state, event_data = None):
+        if self.game_state != new_state:
+            print(f'Transitioning from game state {self.game_state} to {new_state}')
+            self.game_state = new_state
 
             if self.active_game_state_mgr is not None:
                self.active_game_state_mgr.shutdown()
@@ -58,10 +67,10 @@ class Main:
                 self.active_game_state_mgr = StartScreenMgr(self.screen)
             elif self.game_state == GameState.GAMEPLAY:
                 self.active_game_state_mgr = GameplayMgr(self.screen)
-            #elif self.game_state == GameState.END_SCREEN:
-            #    pass
+            elif self.game_state == GameState.GAME_OVER:
+               self.active_game_state_mgr = EndScreenMgr(self.screen, event_data.player_score, event_data.ai_score)
             else:
-                raise NotImplementedError(f'Unhandled game state transition: {state.value}')
+                raise NotImplementedError(f'Unhandled game state transition: {new_state.value}')
 
 # game entrypoint
 Main().run()

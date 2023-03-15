@@ -10,7 +10,7 @@ GAME_TITLE = "Super Pong"
 SHOW_DEBUG_METRICS = True
 
 # gameplay constants
-MAX_SCORE = 5
+MAX_SCORE = 1
 
 # ball constants
 BALL_RADIUS = 4

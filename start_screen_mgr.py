@@ -58,7 +58,7 @@ class StartScreenMgr(BaseGameStateMgr):
         self.screen.fill(light_blue)
 
         self.draw_text(f'super pong', SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 50, dark_blue, 32)
-        self.btn_start.draw(self.screen, pg.mouse.get_pos()[0], pg.mouse.get_pos()[1])
+        self.btn_start.draw(self.screen)
 
         pg.display.flip()
 

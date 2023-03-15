@@ -6,6 +6,7 @@ from ai_paddle import AIPaddle
 from ball import Ball
 from colors import *
 from base_game_state_mgr import BaseGameStateMgr
+from game_event import GameEvent
 
 """
 Manager for gameplay state
@@ -50,7 +51,13 @@ class GameplayMgr(BaseGameStateMgr):
         elif self.ball.x_vel > 0 and self.ball.center_x > SCREEN_WIDTH:
             self.handle_player_score()
 
-        # TODO handle score hitting limit
+        # handle either player hitting score limit
+        if self.player_score >= MAX_SCORE or self.ai_score >= MAX_SCORE:
+            pg.event.post(pg.event.Event(GameEvent.ON_GAME_OVER.value, {
+                'player_score': self.player_score, 
+                'ai_score': self.ai_score
+                })
+            )
 
     @override
     def draw(self):
