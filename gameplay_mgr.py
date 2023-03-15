@@ -4,7 +4,7 @@ from constants import *
 from player_paddle import PlayerPaddle
 from ai_paddle import AIPaddle
 from ball import Ball
-from colors import *
+from theme import Theme
 from base_game_state_mgr import BaseGameStateMgr
 from game_event import GameEvent
 
@@ -62,10 +62,10 @@ class GameplayMgr(BaseGameStateMgr):
     @override
     def draw(self):
         # background
-        self.screen.fill(light_blue)
+        self.screen.fill(Theme.BACKGROUND.value)
 
         # center line
-        pg.draw.line(self.screen, dark_blue, (SCREEN_WIDTH / 2, 0), (SCREEN_WIDTH / 2, SCREEN_HEIGHT), 2)
+        pg.draw.line(self.screen, Theme.SECONDARY.value, (SCREEN_WIDTH / 2, 0), (SCREEN_WIDTH / 2, SCREEN_HEIGHT), 2)
 
         # gameplay elements
         self.player_paddle.draw(self.screen)
@@ -73,11 +73,11 @@ class GameplayMgr(BaseGameStateMgr):
         self.ball.draw(self.screen)
 
         # score text display
-        self.draw_text(f'{self.player_score}', 20, 20, dark_blue, 12)
-        self.draw_text(f'{self.ai_score}', SCREEN_WIDTH - 20, 20, dark_blue, 12)
+        self.draw_text(f'{self.player_score}', 20, 20, Theme.PRIMARY.value, 12)
+        self.draw_text(f'{self.ai_score}', SCREEN_WIDTH - 20, 20, Theme.PRIMARY.value, 12)
 
         if SHOW_DEBUG_METRICS:
-            self.draw_text(f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', 80, SCREEN_HEIGHT - 20, dark_blue, 12)
+            self.draw_text(f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', 80, SCREEN_HEIGHT - 20, Theme.PRIMARY.value, 12)
 
         pg.display.flip()
 

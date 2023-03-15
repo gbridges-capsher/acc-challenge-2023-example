@@ -1,7 +1,7 @@
 from typing_extensions import override
 from base_game_state_mgr import BaseGameStateMgr
 from constants import *
-from colors import *
+from theme import Theme
 from button import Button
 from game_event import GameEvent
 import pygame as pg
@@ -58,13 +58,13 @@ class EndScreenMgr(BaseGameStateMgr):
     @override
     def draw(self):
         # background
-        self.screen.fill(light_blue)
+        self.screen.fill(Theme.BACKGROUND.value)
 
         end_text = 'you win!' if self.final_player_score > self.final_ai_score else 'you lost'
-        self.draw_text(end_text, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 75, dark_blue, 64)
+        self.draw_text(end_text, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 75, Theme.PRIMARY.value, 64)
 
-        self.draw_text('final score', SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 10, dark_blue, 24)
-        self.draw_text(f'{self.final_player_score} - {self.final_ai_score}', SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 20, dark_blue, 24)
+        self.draw_text('final score', SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 10, Theme.PRIMARY.value, 24)
+        self.draw_text(f'{self.final_player_score} - {self.final_ai_score}', SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 20, Theme.PRIMARY.value, 24)
 
         self.btn_exit.draw(self.screen)
 

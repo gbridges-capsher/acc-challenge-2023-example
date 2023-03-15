@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from constants import *
-from colors import *
+from theme import Theme
 import pygame as pg
 
 """
@@ -13,7 +13,7 @@ class Paddle(ABC):
 
         self.height = PADDLE_INITIAL_HEIGHT
         self.width = PADDLE_WIDTH
-        self.color = dark_blue
+        self.color = Theme.PRIMARY.value
 
     @abstractmethod
     def check_ball_passed(self, ball):

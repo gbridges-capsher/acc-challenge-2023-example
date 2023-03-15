@@ -1,4 +1,4 @@
-from colors import *
+from theme import Theme
 from constants import *
 from random import randint
 import pygame as pg
@@ -11,7 +11,7 @@ class Ball:
         self.x_vel = 0
         self.y_vel = 0
 
-        self.color = dark_blue
+        self.color = Theme.PRIMARY.value
         self.radius = BALL_RADIUS
 
         self.reset(False)

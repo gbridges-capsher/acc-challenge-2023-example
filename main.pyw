@@ -1,6 +1,5 @@
 import pygame as pg
 from constants import *
-from colors import *
 from start_screen_mgr import StartScreenMgr
 from gameplay_mgr import GameplayMgr
 from end_screen_mgr import EndScreenMgr
@@ -57,7 +56,7 @@ class Main:
     
     def transition_game_state(self, new_state, event_data = None):
         if self.game_state != new_state:
-            print(f'Transitioning from game state {self.game_state} to {new_state}')
+            print(f'Transitioning from {self.game_state} to {new_state}')
             self.game_state = new_state
 
             if self.active_game_state_mgr is not None:

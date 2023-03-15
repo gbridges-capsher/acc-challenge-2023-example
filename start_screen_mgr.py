@@ -1,7 +1,7 @@
 from typing_extensions import override
 from base_game_state_mgr import BaseGameStateMgr
 from constants import *
-from colors import *
+from theme import Theme
 from button import Button
 from game_event import GameEvent
 import pygame as pg
@@ -55,9 +55,14 @@ class StartScreenMgr(BaseGameStateMgr):
     @override
     def draw(self):
         # background
-        self.screen.fill(light_blue)
+        self.screen.fill(Theme.BACKGROUND.value)
 
-        self.draw_text(f'super pong', SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 50, dark_blue, 32)
+        x_pos = SCREEN_WIDTH / 2
+        y_pos = SCREEN_HEIGHT / 2 - 60
+
+        self.draw_text(f'super pong', x_pos, y_pos, Theme.PRIMARY.value, 64)
+
+        y_pos += 50
         self.btn_start.draw(self.screen)
 
         pg.display.flip()

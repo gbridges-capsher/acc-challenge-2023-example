@@ -7,10 +7,10 @@ FPS = 24
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 GAME_TITLE = "Super Pong"
-SHOW_DEBUG_METRICS = True
+SHOW_DEBUG_METRICS = False
 
 # gameplay constants
-MAX_SCORE = 1
+MAX_SCORE = 3
 
 # ball constants
 BALL_RADIUS = 4

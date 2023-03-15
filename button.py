@@ -1,5 +1,5 @@
 import pygame as pg
-from colors import *
+from theme import Theme
 from constants import *
 
 class Button:
@@ -8,10 +8,6 @@ class Button:
         self.rect = pg.Rect(x, y, width, height)
         self.callback = callback
 
-        self.base_color = (230, 92, 64)
-        self.hover_color = (224, 144, 128)
-        self.down_color = (184, 70, 48)
-        self.text_color = black
         self.font_size = 12
         self.font_family = 'freesansbold.ttf'
 
@@ -43,15 +39,15 @@ class Button:
         mouse_x = pg.mouse.get_pos()[0]
         mouse_y = pg.mouse.get_pos()[1]
         
-        color = self.base_color
+        color = Theme.BUTTON_BASE.value
         if self.hit_test(mouse_x, mouse_y):
             if self.is_pressed:
-                color = self.down_color
+                color = Theme.BUTTON_CLICK.value
             else:
-                color = self.hover_color
+                color = Theme.BUTTON_HOVER.value
         
         pg.draw.rect(screen, color, self.rect)
 
         font = pg.font.Font(self.font_family, self.font_size)
-        text_object = font.render(self.text, True, self.text_color)
+        text_object = font.render(self.text, True, Theme.BUTTON_TEXT.value)
         screen.blit(text_object, self.rect)
