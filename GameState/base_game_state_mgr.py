@@ -1,6 +1,4 @@
 from abc import ABC, abstractmethod
-import pygame as pg
-from theme import Font
 
 """
 Abstract base class for the mgrs of individual game states to derive from
@@ -43,14 +41,3 @@ class BaseGameStateMgr(ABC):
     def handle_mouse_left_btn_up(self, event):
         handled = True
         return handled
-    
-    """
-    Utility for easily drawing text on screen
-    TODO: Move this to a utility class
-    """
-    def draw_text(self, text, x, y, color, font_size):
-        font = pg.font.Font(Font.PRIMARY.value, font_size)
-        text_object = font.render(text, True, color)
-        text_rect = text_object.get_rect()
-        text_rect.center = (x, y)
-        self.screen.blit(text_object, text_rect)

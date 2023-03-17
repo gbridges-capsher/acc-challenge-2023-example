@@ -1,12 +1,14 @@
-from typing_extensions import override
 import pygame as pg
+from typing_extensions import override
+
+from CommonUI.draw_util import DrawUtil
 from constants import *
-from GameState.Gameplay.player_paddle import PlayerPaddle
-from GameState.Gameplay.ai_paddle import AIPaddle
-from GameState.Gameplay.ball import Ball
-from theme import Theme
 from GameState.base_game_state_mgr import BaseGameStateMgr
 from GameState.game_event import GameEvent
+from GameState.Gameplay.ai_paddle import AIPaddle
+from GameState.Gameplay.ball import Ball
+from GameState.Gameplay.player_paddle import PlayerPaddle
+from theme import Theme
 
 """
 Manager for gameplay state
@@ -74,11 +76,11 @@ class GameplayMgr(BaseGameStateMgr):
 
         # score text display
         score_text_margin = 20
-        self.draw_text(f'{self.player_score}', score_text_margin, score_text_margin, Theme.SECONDARY.value, 24)
-        self.draw_text(f'{self.ai_score}', SCREEN_WIDTH - score_text_margin, score_text_margin, Theme.SECONDARY.value, 24)
+        DrawUtil.draw_text(self.screen, f'{self.player_score}', score_text_margin, score_text_margin, Theme.SECONDARY.value, 24)
+        DrawUtil.draw_text(self.screen, f'{self.ai_score}', SCREEN_WIDTH - score_text_margin, score_text_margin, Theme.SECONDARY.value, 24)
 
         if SHOW_DEBUG_METRICS:
-            self.draw_text(f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', 80, SCREEN_HEIGHT - 20, Theme.PRIMARY.value, 12)
+            DrawUtil.draw_text(self.screen, f'Ball Vel: [{self.ball.x_vel:0.1f}, {self.ball.y_vel:0.1f}]', 80, SCREEN_HEIGHT - 20, Theme.PRIMARY.value, 12)
 
         pg.display.flip()
 

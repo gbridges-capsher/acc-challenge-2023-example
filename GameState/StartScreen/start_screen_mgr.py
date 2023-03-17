@@ -1,10 +1,13 @@
-from typing_extensions import override
-from GameState.base_game_state_mgr import BaseGameStateMgr
-from constants import *
-from theme import Theme
-from CommonUI.button import Button
-from GameState.game_event import GameEvent
 import pygame as pg
+from typing_extensions import override
+
+from CommonUI.button import Button
+from CommonUI.draw_util import DrawUtil
+from constants import *
+from GameState.base_game_state_mgr import BaseGameStateMgr
+from GameState.game_event import GameEvent
+from theme import Theme
+
 
 class StartScreenMgr(BaseGameStateMgr):
     def __init__(self, screen):
@@ -51,7 +54,7 @@ class StartScreenMgr(BaseGameStateMgr):
         x_pos = SCREEN_WIDTH / 2
         y_pos = SCREEN_HEIGHT / 2 - 60
 
-        self.draw_text(f'super pong', x_pos, y_pos, Theme.PRIMARY.value, 64)
+        DrawUtil.draw_text(self.screen, f'super pong', x_pos, y_pos, Theme.PRIMARY.value, 64)
 
         y_pos += 50
 

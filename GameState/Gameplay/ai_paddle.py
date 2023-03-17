@@ -1,7 +1,9 @@
+from random import random
+
 from typing_extensions import override
+
 from constants import *
 from GameState.Gameplay.paddle import Paddle
-from random import random
 
 """
 AI-controlled opponent paddle - calculates its own position based on ball position

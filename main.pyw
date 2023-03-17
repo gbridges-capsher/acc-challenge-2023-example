@@ -1,10 +1,12 @@
 import pygame as pg
+
 from constants import *
-from GameState.StartScreen.start_screen_mgr import StartScreenMgr
-from GameState.Gameplay.gameplay_mgr import GameplayMgr
 from GameState.EndScreen.end_screen_mgr import EndScreenMgr
-from GameState.game_state import GameState
 from GameState.game_event import GameEvent
+from GameState.game_state import GameState
+from GameState.Gameplay.gameplay_mgr import GameplayMgr
+from GameState.StartScreen.start_screen_mgr import StartScreenMgr
+
 
 class Main:
     def __init__(self):

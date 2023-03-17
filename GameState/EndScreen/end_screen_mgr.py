@@ -1,10 +1,13 @@
-from typing_extensions import override
-from GameState.base_game_state_mgr import BaseGameStateMgr
-from constants import *
-from theme import Theme
-from CommonUI.button import Button
-from GameState.game_event import GameEvent
 import pygame as pg
+from typing_extensions import override
+
+from CommonUI.button import Button
+from CommonUI.draw_util import DrawUtil
+from constants import *
+from GameState.base_game_state_mgr import BaseGameStateMgr
+from GameState.game_event import GameEvent
+from theme import Theme
+
 
 class EndScreenMgr(BaseGameStateMgr):
     def __init__(self, screen, final_player_score, final_ai_score):
@@ -55,12 +58,12 @@ class EndScreenMgr(BaseGameStateMgr):
         y_pos = SCREEN_HEIGHT / 2 - 75
 
         end_text = 'you win!' if self.final_player_score > self.final_ai_score else 'you lost'
-        self.draw_text(end_text, x_pos, y_pos, Theme.PRIMARY.value, 64)
+        DrawUtil.draw_text(self.screen, end_text, x_pos, y_pos, Theme.PRIMARY.value, 64)
 
         y_pos += 65
-        self.draw_text('final score', x_pos, y_pos, Theme.PRIMARY.value, 24)
+        DrawUtil.draw_text(self.screen, 'final score', x_pos, y_pos, Theme.PRIMARY.value, 24)
         y_pos += 30
-        self.draw_text(f'{self.final_player_score} - {self.final_ai_score}', x_pos, y_pos, Theme.PRIMARY.value, 24)
+        DrawUtil.draw_text(self.screen, f'{self.final_player_score} - {self.final_ai_score}', x_pos, y_pos, Theme.PRIMARY.value, 24)
 
         btn_width = 80
         btn_height = 20
