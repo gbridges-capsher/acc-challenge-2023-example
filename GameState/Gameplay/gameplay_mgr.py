@@ -1,12 +1,12 @@
 from typing_extensions import override
 import pygame as pg
 from constants import *
-from player_paddle import PlayerPaddle
-from ai_paddle import AIPaddle
-from ball import Ball
+from GameState.Gameplay.player_paddle import PlayerPaddle
+from GameState.Gameplay.ai_paddle import AIPaddle
+from GameState.Gameplay.ball import Ball
 from theme import Theme
-from base_game_state_mgr import BaseGameStateMgr
-from game_event import GameEvent
+from GameState.base_game_state_mgr import BaseGameStateMgr
+from GameState.game_event import GameEvent
 
 """
 Manager for gameplay state

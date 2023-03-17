@@ -1,6 +1,6 @@
 from typing_extensions import override
 from constants import *
-from paddle import Paddle
+from GameState.Gameplay.paddle import Paddle
 from random import random
 
 """

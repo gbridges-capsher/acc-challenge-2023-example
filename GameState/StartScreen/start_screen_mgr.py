@@ -1,9 +1,9 @@
 from typing_extensions import override
-from base_game_state_mgr import BaseGameStateMgr
+from GameState.base_game_state_mgr import BaseGameStateMgr
 from constants import *
 from theme import Theme
-from button import Button
-from game_event import GameEvent
+from CommonUI.button import Button
+from GameState.game_event import GameEvent
 import pygame as pg
 
 class StartScreenMgr(BaseGameStateMgr):
