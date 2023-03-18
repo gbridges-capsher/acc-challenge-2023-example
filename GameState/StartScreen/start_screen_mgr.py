@@ -8,7 +8,6 @@ from GameState.base_game_state_mgr import BaseGameStateMgr
 from GameState.game_event import GameEvent
 from theme import Theme
 
-
 class StartScreenMgr(BaseGameStateMgr):
     def __init__(self, screen):
         super().__init__(screen)
@@ -56,12 +55,10 @@ class StartScreenMgr(BaseGameStateMgr):
 
         DrawUtil.draw_text(self.screen, f'super pong', x_pos, y_pos, Theme.PRIMARY.value, 64)
 
-        y_pos += 50
-
-        btn_width = 60
-        btn_height = 20
+        btn_width = 120
+        btn_height = 50
         btn_x = x_pos - btn_width / 2 
-        btn_y = y_pos + 50
+        btn_y = y_pos + 120
         self.btn_start.draw(self.screen, btn_x, btn_y, btn_width, btn_height)
 
         pg.display.flip()

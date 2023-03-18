@@ -57,7 +57,7 @@ class EndScreenMgr(BaseGameStateMgr):
         x_pos = SCREEN_WIDTH / 2
         y_pos = SCREEN_HEIGHT / 2 - 75
 
-        end_text = 'you win!' if self.final_player_score > self.final_ai_score else 'you lost'
+        end_text = 'you win! :D' if self.final_player_score > self.final_ai_score else 'you lost :('
         DrawUtil.draw_text(self.screen, end_text, x_pos, y_pos, Theme.PRIMARY.value, 64)
 
         y_pos += 65
@@ -65,10 +65,10 @@ class EndScreenMgr(BaseGameStateMgr):
         y_pos += 30
         DrawUtil.draw_text(self.screen, f'{self.final_player_score} - {self.final_ai_score}', x_pos, y_pos, Theme.PRIMARY.value, 24)
 
-        btn_width = 80
-        btn_height = 20
+        btn_width = 160
+        btn_height = 50
         btn_x = x_pos - btn_width / 2
-        btn_y = y_pos + 60
+        btn_y = y_pos + 70
         self.btn_exit.draw(self.screen, btn_x, btn_y, btn_width, btn_height)
 
         pg.display.flip()

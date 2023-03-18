@@ -7,7 +7,6 @@ from GameState.game_state import GameState
 from GameState.Gameplay.gameplay_mgr import GameplayMgr
 from GameState.StartScreen.start_screen_mgr import StartScreenMgr
 
-
 class Main:
     def __init__(self):
         # pygame setup
@@ -22,10 +21,6 @@ class Main:
 
     def run(self):
         self.transition_game_state(GameState.START_SCREEN)
-        #self.transition_game_state(GameState.GAME_OVER, pg.event.Event(GameEvent.ON_GAME_OVER.value, {
-        #    'player_score': 1, 
-        #    'ai_score': 0
-        #}))
 
         # main game loop
         while True:

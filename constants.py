@@ -1,5 +1,7 @@
 """
-This constants file serves as a kind of "dashboard" to easily adjust game mechanics in one spot
+This file serves as a kind of dashboard to easily adjust all game mechanics in one spot
+
+Note: All velocity values are measured in "pixels per frame"
 """
 
 # game constants

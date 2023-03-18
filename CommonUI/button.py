@@ -1,14 +1,14 @@
 import pygame as pg
-from theme import Theme, Font
+from theme import Theme
 from constants import *
+from CommonUI.draw_util import DrawUtil
 
 class Button:
-    def __init__(self, text, callback):
+    def __init__(self, text, callback, font_size = 24):
         self.text = text
         self.callback = callback
 
-        self.font_size = 12
-        self.font_family = Font.PRIMARY.value
+        self.font_size = font_size
         self.rect = None # defined on "draw"; saved so we can do hit tests
 
         self.is_pressed = False
@@ -38,7 +38,7 @@ class Button:
 
         return handled
     
-    def draw(self, screen, x, y, width, height):
+    def draw(self, screen, left_x, top_y, width, height):
         mouse_x = pg.mouse.get_pos()[0]
         mouse_y = pg.mouse.get_pos()[1]
         
@@ -49,9 +49,9 @@ class Button:
             else:
                 color = Theme.BUTTON_HOVER.value
         
-        self.rect = pg.Rect(x, y, width, height)
+        self.rect = pg.Rect(left_x, top_y, width, height)
         pg.draw.rect(screen, color, self.rect)
 
-        font = pg.font.Font(self.font_family, self.font_size)
-        text_object = font.render(self.text, True, Theme.BUTTON_TEXT.value)
-        screen.blit(text_object, self.rect)
+        center_x = left_x + width / 2
+        center_y = top_y + height / 2
+        DrawUtil.draw_text(screen, self.text, center_x, center_y, Theme.BUTTON_TEXT.value, self.font_size)
