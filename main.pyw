@@ -14,6 +14,10 @@ class Main:
 
         self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pg.display.set_caption(GAME_TITLE)
+
+        img = pg.image.load('Assets/Capsher-Logo.png')
+        pg.display.set_icon(img)
+
         self.clock = pg.time.Clock()
 
         self.game_state = None
