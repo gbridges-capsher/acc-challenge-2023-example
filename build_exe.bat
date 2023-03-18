@@ -1,1 +1,1 @@
-pyinstaller main.pyw --name "My Game" --onefile
+pyinstaller main.pyw --name "[Team Name] - Game Name" --onefile
