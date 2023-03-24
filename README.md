@@ -4,6 +4,7 @@ This repository is an example of a simple game made with PyGame for the 2023 ACC
 
 ## Running the Code
 *(This doesn't need to be included in your own project's README as we won't be running your code directly - this is just for your own knowledge)*
+
 This project was developed using [Python 3.10.1](https://www.python.org/downloads/release/python-3101/). "main.pyw" serves as the entrypoint to the application. The "requirements.txt" file includes all dependencies required in this project - to install all dependencies listed in this file, run the following command from command line:
 ```bash
 py -m pip install -r requirements.txt
@@ -12,6 +13,7 @@ py -m pip install -r requirements.txt
 
 ## Building a Self-Contained Executable
 *(Don't need to include this in your README)*
+
 The final submission for this challenge should be a single, self-contained .exe file that can be built with the "pyinstaller" library. Included in this repo is a "build_exe.bat" file that can be used to generate a self-contained .exe. The command within is as follows:
 ```bash
 pyinstaller main.pyw --name "My Game" --onefile
